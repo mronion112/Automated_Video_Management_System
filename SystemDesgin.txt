@@ -1,0 +1,343 @@
+Project is the combine of tool Video and tool Story
+
+
+Automated_Video_Management_System.zip [
+appExecute.exe
+ProjectData folder (
+                    VideoProject --> NameProject1.folder --> NameProject1.json
+                                                         --> VideoStorage.folder --> DataScrap.json
+
+                    StoryProject --> NameProject2.folder --> NameProject2.json
+                                                         --> StoryStorage.folder --> DataScrap.json
+
+                        )
+
+Properties folder ( ToolList.folder
+
+                UserData.folder --> ProjectConf.folder --> Video --> NameFolder1VideoConf.properties ( link Website, outPutDirectory, linkDrive, linkSheet, nameSheet)
+                                                       --> Story --> NameFolder2StoryConf.properties     ________
+
+
+                                --> User               --> Video --> UserVideoConf.properties ( linkWebBili, outPutDirectory, linkDrive, linkSheet, nameSheet)
+                                                        --> Story --> UserStoryConf.properties ( link Story, outPut_______)
+
+
+                ]
+
+
+DataBase :
+- Inside each UserData folder will have :
+    + ProjectData folder
+        NameProject folder ( will create each time user create new project )
+            + NameProject1 folder : Which can store the data of Video or Story after analysis
+                And inside it will have NameProtect1.json and Process.properties
+
+                    NameProject1.json will have the format [
+
+                           #Video/Story, Name_Collumn1 , Name_Collumn2, Name_Collumn3, ...
+
+                           if( NameProject.json not contain Drive Column --> still not up load to drive yet  and else had been upload)
+
+                           Name_Collum1: {Name_Collum1, ......}
+
+
+        ]
+
+
+Feature :
+
+- Multiple tab and multiple profile
+
+- List Project ( sideTab)
+
+
+- User after open app will arrive in a blanket menu ( Create a project or Open current Project)
+
+    +, Create a project will have textBox : ProjectName, Choosing Directory ( it will have a checkBox use recommend folder) and video/story (checkBox)
+                                             not null            can null                                                                not null
+    +, Open project : Will show list of name project in ProjectData as a hint ( user can choose it and access)
+        or user can access another file.json outside but follow the format
+
+    Example : ProjectName = ProjectTest , Directory : null ( Store in userId_1/UserData/ProjectData) , Video  Checked
+    ==> A new file ProjectTest.json will create in userId_1/UserData/ProjectData.
+
+    after create then they will show a blanket sheet. Notthing inside
+
+- Open file.json follow format out side
+
+   incase of user create a new project, they can start analysis or open a current project.json out side if it suitable .
+
+
+if( user choose the video){
+        - ScanningVideo :
+        + It will pop a screen : You can choose what information you want to add ( beside of idVideo , nameVideo, linkDrive)
+            viewCount
+            commentCount
+            ....
+
+        At the first time scanning. They won't have linkDrive but then they will add a column link Drive right after nameVideo .
+
+        CRUD
+
+        Local VideoFolder
+
+            - addNewVideoToList(String urlVideo)
+
+            - findVideoById(int idVideo)
+
+            - showVideoLocalData
+
+            - listVideoNotUpYet() / listVideoUpped()
+
+            - Update(int idVideo)
+
+            - Delete(int idVideo)
+
+        Drive: CRUD
+
+            - upOneToDrive ( int idVideo, String linkDrive)
+
+            - upAllToDrive(String linkDrive)
+
+            - getListDriveCurrence
+
+            - getListUpdateDrive
+
+            - deleteVideo(int idVideo)
+
+
+        Sheet: CRUD   ( Take the ggdrive list to be the standard )
+
+            - upAllToSheet(String linkSheet, String nameSheet)
+
+            - upSingleOne ( String linkSheet, String nameSheet)
+
+            - getDataFormSheet(...)
+
+            - updateDataFormLocalToSheet(...)
+
+
+        Because the LocalVideo Sheet alway have size = Sheet -1 ==> So that we can use this as a rule when want to update Sheet
+            ==> Must get DataFormSheet First and update on it beside of local videofolder
+
+
+
+
+}
+
+else{
+     - ScanningStory :
+             + It will pop a screen : You can choose what information you want to add ( beside of idStory , nameStory, linkDrive)
+                 author
+                 numberChapter
+                 ....
+
+             At the first time scanning. They won't have linkDrive but then they will add a column link Drive right after nameVideo .
+
+             CRUD
+
+             Local StoryFolder
+
+                 - addNewStoryToList(String urlStory)
+
+                 - findVideoById(int idStory)
+
+                 - showVideoLocalData
+
+                 - listVideoNotUpYet() / listVideoUpped()
+
+                 - Update(int idStory)
+
+                 - Delete(int idStory)
+
+             Drive: CRUD
+
+                 - upOneToDrive ( int idStory, String linkStory)
+
+                 - upAllToDrive(String linkDrive)
+
+                 - getListDriveCurrence
+
+                 - getListUpdateDrive
+
+                 - deleteVideo(int idStory)
+
+
+             Sheet: CRUD   ( Take the ggdrive list to be the standard )
+
+                 - upAllToSheet(String linkSheet, String nameSheet)
+
+                 - upSingleOne ( String linkSheet, String nameSheet)
+
+                 - getDataFormSheet(...)
+
+                 - updateDataFormLocalToSheet(...)
+
+
+             Because the LocalStory Sheet alway have size = Sheet -1 ==> So that we can use this as a rule when want to update Sheet
+                 ==> Must get DataFormSheet First and update on it beside of local videofolder
+
+
+
+
+}
+
+
+
+
+
+
+System Desgin
+
+Module[
+
+    EntityLayout[
+
+        Video[
+
+            Local[
+                LocalVideo{String nameVideo, String idVideo, String duRation, int viewCount, int commentCount}
+
+            ]
+
+            WebVideo[
+                WebVideo{String urlVideo, String urlThumbnail,  String duration, int viewCount, int comment }
+
+            ]
+
+
+        ]
+
+        Story[
+
+            Local[
+                LocalStory{String nameStory, String idStory, String Type}
+
+            ]
+
+            WebStory[
+                WebStory{String urlStory, List<String> Type, int chapterCount}
+
+            ]
+
+
+        ]
+
+        Config[
+            ProjectConf.class {String linkWebSite, String outPutDirectory, String linkDrive, String linkSheet, String nameSheet}
+
+        ]
+
+
+        GoogleDrive[
+            GoogleDrive{NetHttpTransport HTTP_TRANSPORT, String linkDrive, Credential credential, Strig CREDENTIALS_FILE_PATH, String TOKENS_DIRECTORY_PATH}
+
+        ]
+
+        GoogleSheet{
+            GoogleSheet(NetHttpTransport HTTP_TRANSPORT, ,String sheetLink, String sheetName, String driveParentId, Credential credential,  String CREDENTIALS_FILE_PATH, String TOKENS_DIRECTORY_PATH}
+        }
+
+        Permission{
+            CredentialPermission(NetHttpTransport HTTP_TRANSPORT
+                                             , String CREDENTIALS_FILE_PATH
+                                             , String TOKENS_DIRECTORY_PATH)
+
+
+        }
+
+
+
+    ]
+
+    Reposition_Layout [
+        LocalVideoReposition (- addNewStoryToList(String urlStory)
+
+                                               - findVideoById(int idStory)
+
+                                               - showVideoLocalData
+
+                                               - listVideoNotUpYet() / listVideoUpped()
+
+                                               - Update(int idStory)
+
+                                               - Delete(int idStory) )
+
+
+        LocalStoryReposition ( - addNewStoryToList(String urlStory)
+
+                                                - findVideoById(int idStory)
+
+                                                - showVideoLocalData
+
+                                                - listVideoNotUpYet() / listVideoUpped()
+
+                                                - Update(int idStory)
+
+                                                - Delete(int idStory) )
+
+
+        GoogleDriveVideoReposition (upOneToDrive ( int idVideo, String linkDrive)
+
+                                                - upAllToDrive(String linkDrive)
+
+                                                - getListDriveCurrence
+
+                                                - getListUpdateDrive
+
+                                                - deleteVideo(int idVideo))
+
+        GoogleDriveStoryReposition (- upOneToDrive ( int idStory, String linkStory)
+
+                                                     - upAllToDrive(String linkDrive)
+
+                                                     - getListDriveCurrence
+
+                                                     - getListUpdateDrive
+
+                                                     - deleteVideo(int idStory))
+
+
+        GoogleSheetRepostition (- upAllToSheet(String linkSheet, String nameSheet)
+
+                                                 - upSingleOne ( String linkSheet, String nameSheet)
+
+                                                 - getDataFormSheet(...)
+
+                                                 - updateDataFormLocalToSheet(...));
+
+
+
+
+    ]
+
+    Service_Layout[
+        That will call all the method in Reposition and management it..
+
+
+    ]
+
+
+
+]
+
+DTO[
+
+
+]
+
+
+Controller[
+
+    Take the request from View filter and check it before send it to Module class then take the respone
+    setting and check and display to view
+
+
+
+]
+
+View[Display of app]
+
+
+
+

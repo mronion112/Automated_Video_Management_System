@@ -1,0 +1,8 @@
+2025/11/27-01:06:43.819 1a981 Reusing MANIFEST /home/mronion216/Documents/Onion Code/Project/Automated_Video_Management_System/Onion_profile/Default/Local Storage/leveldb/MANIFEST-000001
+2025/11/27-01:06:43.827 1a981 Recovering log #3
+2025/11/27-01:06:43.827 1a981 Level-0 table #3: started
+2025/11/27-01:06:43.831 1a981 Level-0 table #3: 23889 bytes OK
+2025/11/27-01:06:43.831 1a981 Recovering log #4
+2025/11/27-01:06:43.832 1a981 Reusing old log /home/mronion216/Documents/Onion Code/Project/Automated_Video_Management_System/Onion_profile/Default/Local Storage/leveldb/000004.log 
+2025/11/27-01:06:43.834 1a981 Delete type=2 #5
+2025/11/27-01:06:43.834 1a981 Delete type=0 #3
