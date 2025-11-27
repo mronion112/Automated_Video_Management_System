@@ -7,11 +7,9 @@ import java.util.Map;
 
 public class GoogleDriveDataEntity {
     private LocalDataEntity localDataEntity;
-    private String linkDrive;
 
-    public GoogleDriveDataEntity(LocalDataEntity localDataEntity, String linkDrive) {
+    public GoogleDriveDataEntity(LocalDataEntity localDataEntity) {
         this.localDataEntity = localDataEntity;
-        this.linkDrive = linkDrive;
     }
 
     public LocalDataEntity getLocalDataEntity() {
@@ -22,19 +20,10 @@ public class GoogleDriveDataEntity {
         this.localDataEntity = localDataEntity;
     }
 
-    public String getLinkDrive() {
-        return linkDrive;
-    }
-
-    public void setLinkDrive(String linkDrive) {
-        this.linkDrive = linkDrive;
-    }
-
     @Override
     public String toString() {
         return "GoogleDriveDataEntity{" +
                 "localDataEntity=" + localDataEntity +
-                ", linkDrive='" + linkDrive + '\'' +
                 '}';
     }
 }
