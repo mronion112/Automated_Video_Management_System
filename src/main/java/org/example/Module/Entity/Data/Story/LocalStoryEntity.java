@@ -5,8 +5,8 @@ import org.example.Module.Entity.Data.LocalDataEntity;
 import java.util.List;
 
 public class LocalStoryEntity extends LocalDataEntity {
-    private int idStory;
-    private String nameStory;
+//    private int idStory;
+//    private String nameStory;
     private List<String> types;
     private String author;
     private int numberChapter;
@@ -20,21 +20,21 @@ public class LocalStoryEntity extends LocalDataEntity {
         this.status = status;
     }
 
-    public int getIdStory() {
-        return idStory;
-    }
-
-    public void setIdStory(int idStory) {
-        this.idStory = idStory;
-    }
-
-    public String getNameStory() {
-        return nameStory;
-    }
-
-    public void setNameStory(String nameStory) {
-        this.nameStory = nameStory;
-    }
+//    public int getIdStory() {
+//        return idStory;
+//    }
+//
+//    public void setIdStory(int idStory) {
+//        this.idStory = idStory;
+//    }
+//
+//    public String getNameStory() {
+//        return nameStory;
+//    }
+//
+//    public void setNameStory(String nameStory) {
+//        this.nameStory = nameStory;
+//    }
 
     public List<String> getTypes() {
         return types;
@@ -70,9 +70,9 @@ public class LocalStoryEntity extends LocalDataEntity {
 
     @Override
     public String toString() {
-        return "LocalStoryEntity{" +
-                "idStory='" + idStory + '\'' +
-                ", nameStory='" + nameStory + '\'' +
+        return "LocalStoryEntity{" +    
+                "idStory='" + getIdData() + '\'' +
+                ", nameStory='" + getNameData() + '\'' +
                 ", types=" + types +
                 ", author='" + author + '\'' +
                 ", numberChapter=" + numberChapter +
