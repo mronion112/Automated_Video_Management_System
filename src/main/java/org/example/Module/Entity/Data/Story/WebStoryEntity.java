@@ -5,8 +5,8 @@ import org.example.Module.Entity.Data.WebDataEntity;
 import java.util.List;
 
 public class WebStoryEntity extends WebDataEntity {
-    private String urlStory;
-    private String nameStory;
+//    private String urlStory;
+//    private String nameStory;
     private List<String> types;
     private String author;
     private int numberChapter;
@@ -21,21 +21,21 @@ public class WebStoryEntity extends WebDataEntity {
         this.status = status;
     }
 
-    public String getUrlStory() {
-        return urlStory;
-    }
-
-    public void setUrlStory(String urlStory) {
-        this.urlStory = urlStory;
-    }
-
-    public String getNameStory() {
-        return nameStory;
-    }
-
-    public void setNameStory(String nameStory) {
-        this.nameStory = nameStory;
-    }
+//    public String getUrlStory() {
+//        return urlStory;
+//    }
+//
+//    public void setUrlStory(String urlStory) {
+//        this.urlStory = urlStory;
+//    }
+//
+//    public String getNameStory() {
+//        return nameStory;
+//    }
+//
+//    public void setNameStory(String nameStory) {
+//        this.nameStory = nameStory;
+//    }
 
     public List<String> getTypes() {
         return types;
@@ -72,8 +72,8 @@ public class WebStoryEntity extends WebDataEntity {
     @Override
     public String toString() {
         return "WebStoryEntity{" +
-                "urlStory='" + urlStory + '\'' +
-                ", nameStory='" + nameStory + '\'' +
+                "urlStory='" + getUrlData() + '\'' +
+                ", nameStory='" + getNameData() + '\'' +
                 ", types=" + types +
                 ", author='" + author + '\'' +
                 ", numberChapter=" + numberChapter +
