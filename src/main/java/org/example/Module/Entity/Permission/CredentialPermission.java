@@ -10,10 +10,10 @@ public class CredentialPermission {
     private String tokenFilePath;
 
 
-    public CredentialPermission(NetHttpTransport httpTransport, String credentialFilePath) {
+    public CredentialPermission(NetHttpTransport httpTransport, String tokenFilePath, String credentialFilePath) {
         this.httpTransport = httpTransport;
         this.credentialFilePath = credentialFilePath;
-        this.tokenFilePath = "Porperties/Token";
+        this.tokenFilePath = tokenFilePath;
     }
 
     public NetHttpTransport getHttpTransport() {
