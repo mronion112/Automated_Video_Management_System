@@ -2,9 +2,9 @@ package org.example.Module.Entity.Data.Video;
 
 import org.example.Module.Entity.Data.WebDataEntity;
 
-public class WebVideoEntity  {
-    private String urlVideo;
-    private String nameVideo;
+public class WebVideoEntity extends WebDataEntity {
+//    private String urlVideo;
+//    private String nameVideo;
     private String urlThumbnail;
     private String duration;
     private String viewCount;
@@ -12,8 +12,7 @@ public class WebVideoEntity  {
     private String timeRelease;
 
     public WebVideoEntity(String urlVideo, String urlThumbnail, String nameVideo, String duration, String viewCount, String commentCount, String timeRelease) {
-        this.urlVideo = urlVideo;
-        this.nameVideo = nameVideo;
+       super (urlVideo, nameVideo);
         this.urlThumbnail = urlThumbnail;
         this.duration = duration;
         this.viewCount = viewCount;
@@ -21,13 +20,13 @@ public class WebVideoEntity  {
         this.timeRelease = timeRelease;
     }
 
-    public String getUrlVideo() {
-        return urlVideo;
-    }
-
-    public void setUrlVideo(String urlVideo) {
-        this.urlVideo = urlVideo;
-    }
+//    public String getUrlVideo() {
+//        return urlVideo;
+//    }
+//
+//    public void setUrlVideo(String urlVideo) {
+//        this.urlVideo = urlVideo;
+//    }
 
     public String getUrlThumbnail() {
         return urlThumbnail;
@@ -45,13 +44,13 @@ public class WebVideoEntity  {
         this.duration = duration;
     }
 
-    public String getNameVideo() {
-        return nameVideo;
-    }
-
-    public void setNameVideo(String nameVideo) {
-        this.nameVideo = nameVideo;
-    }
+//    public String getNameVideo() {
+//        return nameVideo;
+//    }
+//
+//    public void setNameVideo(String nameVideo) {
+//        this.nameVideo = nameVideo;
+//    }
 
     public String getViewCount() {
         return viewCount;
@@ -80,9 +79,9 @@ public class WebVideoEntity  {
     @Override
     public String toString() {
         return "WebStoryEntity{" +
-                "urlVideo='" + urlVideo + '\'' +
+                "urlVideo='" + getUrlData() + '\'' +
                 ", urlThumbnail='" + urlThumbnail + '\'' +
-                ", nameVideo='" + nameVideo + '\'' +
+                ", nameVideo='" + getNameData() + '\'' +
                 ", duration='" + duration + '\'' +
                 ", viewCount='" + viewCount + '\'' +
                 ", commentCount='" + commentCount + '\'' +

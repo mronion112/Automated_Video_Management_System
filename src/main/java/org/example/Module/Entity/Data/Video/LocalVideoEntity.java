@@ -3,38 +3,37 @@ package org.example.Module.Entity.Data.Video;
 import com.github.kokorin.jaffree.nut.StreamHeader;
 import org.example.Module.Entity.Data.LocalDataEntity;
 
-public class LocalVideoEntity {
-    private int idVideo;
-    private String nameVideo;
+public class LocalVideoEntity extends LocalDataEntity {
+//    private int idVideo;
+//    private String nameVideo;
     private String duration;
     private String viewCount;
     private String commentCount;
     private String timeRelease;
 
     public LocalVideoEntity(int idVideo, String nameVideo, String duration, String viewCount, String commentCount, String timeRelease) {
-        this.idVideo = idVideo;
-        this.nameVideo = nameVideo;
+       super(idVideo, nameVideo);
         this.duration = duration;
         this.viewCount = viewCount;
         this.commentCount = commentCount;
         this.timeRelease = timeRelease;
     }
 
-    public int getIdVideo() {
-        return idVideo;
-    }
-
-    public void setIdVideo(int idVideo) {
-        this.idVideo = idVideo;
-    }
-
-    public String getNameVideo() {
-        return nameVideo;
-    }
-
-    public void setNameVideo(String nameVideo) {
-        this.nameVideo = nameVideo;
-    }
+//    public int getIdVideo() {
+//        return idVideo;
+//    }
+//
+//    public void setIdVideo(int idVideo) {
+//        this.idVideo = idVideo;
+//    }
+//
+//    public String getNameVideo() {
+//        return nameVideo;
+//    }
+//
+//    public void setNameVideo(String nameVideo) {
+//        this.nameVideo = nameVideo;
+//    }
 
     public String getViewCount() {
         return viewCount;
@@ -71,8 +70,8 @@ public class LocalVideoEntity {
     @Override
     public String toString() {
         return "LocalStoryEntity{" +
-                "idVideo='" + idVideo + '\'' +
-                ", nameVideo='" + nameVideo + '\'' +
+                "idVideo='" + getIdData() + '\'' +
+                ", nameVideo='" + getNameData() + '\'' +
                 ", duration='" + duration + '\'' +
                 ", viewCount='" + viewCount + '\'' +
                 ", commentCount='" + commentCount + '\'' +
