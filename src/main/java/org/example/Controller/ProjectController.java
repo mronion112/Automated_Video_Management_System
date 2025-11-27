@@ -1,26 +1,111 @@
 package org.example.Controller;
 
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import org.example.Module.Entity.Data.LocalDataEntity;
+import org.example.Module.Entity.Data.Story.LocalStoryEntity;
+import org.example.Module.Entity.Data.Story.WebStoryEntity;
+import org.example.Module.Entity.Data.Video.LocalVideoEntity;
+import org.example.Module.Entity.Data.Video.WebVideoEntity;
+import org.example.Module.Entity.Data.WebDataEntity;
+
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.HashMap;
 
 public class ProjectController {
 
-    public static File currentProjectFolder;
-    public static File projectDataFolder;
-    public static File storageFolder;
+    public File currentProjectFolder;
+    public File projectDataFolder;
+    public File storageFolder;
 
-    public static File googleDriveJson;
-    public static File googleSheetJson;
-    public static File processJson;
+    public File googleDriveJson;
+    public File googleSheetJson;
+    public File processJson;
 
-    public static File dataScrapJson;
+    public File dataScrapJson;
+    public String typeProject;
+
+    private String credentialFilePath;
+    private String tokenFilePath = "GoogleAPI";
 
     public enum Status {
         SUCCESS, NOT_FOUND, ALREADY_EXISTS, MKDIR_FAILED, CREATE_FILE_FAILED, ERROR
     }
 
 
-    public static Status createNewProject(String projectPath, String typeNewProject) {
+    public HashMap<String, WebVideoEntity> listWebVideoEntities;
+    public HashMap<String, LocalVideoEntity> listLocalVideoEntities;
+
+    public HashMap<String, WebStoryEntity> listWebStoryEntities;
+    public HashMap<String, LocalStoryEntity> listLocalStoryEntities;
+
+    public ProjectController(){}
+
+    public void connectDataBaseJson() {
+        Gson gson = new Gson();
+
+        try {
+
+            FileReader processJsonReader = new FileReader(processJson);
+            FileReader dataScrapJsonReader = new FileReader(dataScrapJson);
+            if (typeProject.equals("Video")) {
+                Type typeWebVideo = new TypeToken<HashMap<String, WebVideoEntity>>() {
+                }.getType();
+                Type typeLocalVideo = new TypeToken<HashMap<String, LocalVideoEntity>>() {
+                }.getType();
+
+                listWebVideoEntities = gson.fromJson(processJsonReader, typeWebVideo);
+                listLocalVideoEntities = gson.fromJson(dataScrapJsonReader, typeLocalVideo);
+
+            } else {
+                Type typeWebStory = new TypeToken<HashMap<String, WebStoryEntity>>() {
+                }.getType();
+                Type typeLocalStory = new TypeToken<HashMap<String, LocalStoryEntity>>() {
+                }.getType();
+
+                listWebStoryEntities = gson.fromJson(processJsonReader, typeWebStory);
+                listLocalStoryEntities = gson.fromJson(dataScrapJsonReader, typeLocalStory);
+
+
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        } catch (IOException e) {
+            System.out.println("Error reading file");
+        }
+        catch (JsonSyntaxException e) {
+            System.out.println("JsonSyntaxException");
+        }
+    }
+
+    public Status connectGoogleAPI() {
+
+        File listFile = new File(tokenFilePath);
+
+        for(File file : listFile.listFiles()){
+
+            if(file.getName().endsWith(".json")){
+
+                credentialFilePath = file.getAbsolutePath();
+            }
+
+        }
+
+        return Status.SUCCESS;
+
+
+    }
+
+
+
+    public  Status createNewProject(String projectPath, String typeNewProject) {
+        typeProject = typeNewProject;
         currentProjectFolder = new File(projectPath);
         projectDataFolder = new File(currentProjectFolder, "ProjectData");
 
@@ -61,7 +146,8 @@ public class ProjectController {
     }
 
 
-    public static Status getProject(String projectPath, String typeProject) {
+    public Status getProject(String projectPath, String typeProject) {
+        this.typeProject = typeProject;
         currentProjectFolder = new File(projectPath);
 
         if (!currentProjectFolder.exists() || !currentProjectFolder.isDirectory()) {
@@ -96,12 +182,124 @@ public class ProjectController {
         return Status.SUCCESS;
     }
 
-    private static boolean createFile(File file) {
+    private boolean createFile(File file) {
         try {
             return file.createNewFile();
         } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public HashMap<String, LocalStoryEntity> getListLocalStoryEntities() {
+        return listLocalStoryEntities;
+    }
+
+    public void setListLocalStoryEntities(HashMap<String, LocalStoryEntity> listLocalStoryEntities) {
+        this.listLocalStoryEntities = listLocalStoryEntities;
+    }
+
+    public HashMap<String, WebStoryEntity> getListWebStoryEntities() {
+        return listWebStoryEntities;
+    }
+
+    public void setListWebStoryEntities(HashMap<String, WebStoryEntity> listWebStoryEntities) {
+        this.listWebStoryEntities = listWebStoryEntities;
+    }
+
+    public HashMap<String, LocalVideoEntity> getListLocalVideoEntities() {
+        return listLocalVideoEntities;
+    }
+
+    public void setListLocalVideoEntities(HashMap<String, LocalVideoEntity> listLocalVideoEntities) {
+        this.listLocalVideoEntities = listLocalVideoEntities;
+    }
+
+    public HashMap<String, WebVideoEntity> getListWebVideoEntities() {
+        return listWebVideoEntities;
+    }
+
+    public void setListWebVideoEntities(HashMap<String, WebVideoEntity> listWebVideoEntities) {
+        this.listWebVideoEntities = listWebVideoEntities;
+    }
+
+    public String getTypeProject() {
+        return typeProject;
+    }
+
+    public void setTypeProject(String typeProject) {
+        this.typeProject = typeProject;
+    }
+
+    public  File getCurrentProjectFolder() {
+        return currentProjectFolder;
+    }
+
+    public  void setCurrentProjectFolder(File currentProjectFolder) {
+        this.currentProjectFolder = currentProjectFolder;
+    }
+
+    public  File getProjectDataFolder() {
+        return projectDataFolder;
+    }
+
+    public  void setProjectDataFolder(File projectDataFolder) {
+        this.projectDataFolder = projectDataFolder;
+    }
+
+    public  File getStorageFolder() {
+        return storageFolder;
+    }
+
+    public  void setStorageFolder(File storageFolder) {
+        this.storageFolder = storageFolder;
+    }
+
+    public  File getGoogleDriveJson() {
+        return googleDriveJson;
+    }
+
+    public  void setGoogleDriveJson(File googleDriveJson) {
+        this.googleDriveJson = googleDriveJson;
+    }
+
+    public  File getGoogleSheetJson() {
+        return googleSheetJson;
+    }
+
+    public  void setGoogleSheetJson(File googleSheetJson) {
+        this.googleSheetJson = googleSheetJson;
+    }
+
+    public  File getProcessJson() {
+        return processJson;
+    }
+
+    public  void setProcessJson(File processJson) {
+        this.processJson = processJson;
+    }
+
+    public  File getDataScrapJson() {
+        return dataScrapJson;
+    }
+
+    public  void setDataScrapJson(File dataScrapJson) {
+        this.dataScrapJson = dataScrapJson;
+    }
+
+    public String getTokenFilePath() {
+        return tokenFilePath;
+    }
+
+    public void setTokenFilePath(String tokenFilePath) {
+        this.tokenFilePath = tokenFilePath;
+    }
+
+    public String getCredentialFilePath() {
+        return credentialFilePath;
+    }
+
+    public void setCredentialFilePath(String credentialFilePath) {
+        this.credentialFilePath = credentialFilePath;
     }
 }
